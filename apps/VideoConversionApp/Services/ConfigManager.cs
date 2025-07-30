@@ -87,8 +87,8 @@ public class ConfigManager : IConfigManager
         
         var json = JsonSerializer.Serialize(configJsonNode, 
             options: new JsonSerializerOptions() { WriteIndented = true });
+        Directory.CreateDirectory(Path.GetDirectoryName(filename)!);
         File.WriteAllText(filename, json);
-        
     }
 
     public T? GetConfig<T>() where T: ISerializableConfiguration

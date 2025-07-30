@@ -14,15 +14,13 @@ public class Logger : ILogger
     private readonly object _mutex = new();
     private readonly int _queueCapacity = 100;
     private readonly string _sessionLogFile;
-    private readonly string _assemblyPath; 
     private Encoding _encoding;
     private bool _initialized = false;
-    
+
     public Logger(IConfigManager configManager)
     {
         _config = configManager.GetConfig<LoggingConfig>()!;
         _sessionLogFile = $"log-{DateTime.Now:yyyyMMdd-HHmmss}.txt";
-        _assemblyPath = Path.GetDirectoryName(GetType().Assembly.Location)!;
         _encoding = new UTF8Encoding(false);
     }
     
@@ -81,7 +79,7 @@ public class Logger : ILogger
     {
         var logFile = _config.ReUseLogFile ? "log.txt" : _sessionLogFile;
         var logDir = string.IsNullOrEmpty(_config.LogDirectory) 
-            ? _assemblyPath 
+            ? LoggingConfig.DefaultLoggingDirectory
             : _config.LogDirectory;
         logFile = Path.Combine(logDir, logFile);
         

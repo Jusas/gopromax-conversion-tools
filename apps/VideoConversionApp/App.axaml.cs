@@ -1,9 +1,11 @@
+using System;
+using System.Diagnostics;
 using System.IO;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Themes.Simple;
 using Microsoft.Extensions.DependencyInjection;
 using VideoConversionApp.Abstractions;
 using VideoConversionApp.Services;
@@ -21,9 +23,13 @@ public partial class App : Application
         get
         {
             if (string.IsNullOrEmpty(_configFilePath))
-                _configFilePath = Path.Combine(
-                    Path.GetDirectoryName(typeof(App).Assembly.Location)!,
-                    "config.json");
+            {
+                // Get user home directory/.config
+                var userHomeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                var configDirectory = Path.Combine(userHomeDirectory, ".config", "MAXVideoConverter");
+                _configFilePath = Path.Combine(configDirectory, "config.json");
+            }
+
             return _configFilePath;
         }
     }
@@ -31,6 +37,8 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        var t = typeof(SimpleTheme); // AOT stripping
+        t.ToString();
     }
 
     

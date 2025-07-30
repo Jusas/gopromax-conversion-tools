@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using VideoConversionApp.Abstractions;
 
@@ -17,6 +19,10 @@ public partial class LoggingConfig : ConfigurationObject<LoggingConfig>
     
     public override string GetConfigurationKey() => "logging";
 
+    public static string DefaultLoggingDirectory => Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+        ".local", "share", "MAXVideoConverter");
+
     [ObservableProperty]
     public partial LogLevels LogLevel { get; set; }
     [ObservableProperty]
@@ -29,14 +35,14 @@ public partial class LoggingConfig : ConfigurationObject<LoggingConfig>
     public LoggingConfig()
     {
         LogLevel = LogLevels.Warning;
-        LogDirectory = "logs";
+        LogDirectory = DefaultLoggingDirectory;
         ReUseLogFile = true;
         LogToStdout = false;
     }
     
     protected override void InitializeFrom(LoggingConfig? configuration)
     {
-        LogDirectory = configuration?.LogDirectory ?? "logs";
+        LogDirectory = configuration?.LogDirectory ?? DefaultLoggingDirectory;
         ReUseLogFile = configuration?.ReUseLogFile ?? true;
         LogLevel = configuration?.LogLevel ?? LogLevels.Warning;
         LogToStdout = configuration?.LogToStdout ?? false;
