@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -24,14 +25,24 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     public partial GlobalSettingsViewModel? GlobalSettingsViewModel { get; set; }
     
+    public List<string> MisconfigurationMessages { get; set; } = new();
+    
     public MainWindowViewModel(IServiceProvider? serviceProvider)
     {
+        // Hook to listen to misconfiguration events immediately.
+        if (!Design.IsDesignMode)
+        {
+            var configManager = serviceProvider?.GetRequiredService<IConfigManager>();
+            configManager!.MisconfigurationDetected += (sender, s) => { MisconfigurationMessages.Add(s); };
+        }
+
         MediaSelectionViewModel = serviceProvider?.GetRequiredService<MediaSelectionViewModel>();
         ConversionPreviewViewModel = serviceProvider?.GetRequiredService<ConversionPreviewViewModel>();
         RenderSettingsViewModel = serviceProvider?.GetRequiredService<RenderSettingsViewModel>();
         RenderQueueViewModel = serviceProvider?.GetRequiredService<RenderQueueViewModel>();
         RenderProcessControlViewModel = serviceProvider?.GetRequiredService<RenderProcessControlViewModel>();
         GlobalSettingsViewModel = serviceProvider?.GetRequiredService<GlobalSettingsViewModel>();
+        
         
         if (Design.IsDesignMode)
         {
@@ -42,7 +53,10 @@ public partial class MainWindowViewModel : ViewModelBase
             RenderQueueViewModel = new RenderQueueViewModel(null!, null!, new BitmapCache(), null!);
             RenderProcessControlViewModel = new RenderProcessControlViewModel(null!, null!);
             GlobalSettingsViewModel = new GlobalSettingsViewModel(null!);
+
         }
+        
+
     }
-    
+
 }

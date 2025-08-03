@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+  Width="500"
+  Height="300"
+  x:Class="VideoConversionApp.Views.ErrorPopupWindow"
+  Title="Uh oh!">
+  <Grid RowDefinitions="Auto, *, Auto" Margin="12">
+    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+      <PathIcon Data="{StaticResource warning_regular}" Foreground="Goldenrod" Height="32" VerticalAlignment="Center"/>
+      <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Notice!</TextBlock>
+    </StackPanel>
+    <TextBlock Margin="0 12" Grid.Row="1" Name="MessageText" TextWrapping="Wrap"></TextBlock>
+    <Button Grid.Row="2" Click="Button_OnClick">Ok</Button>
+  </Grid>
+</Window>

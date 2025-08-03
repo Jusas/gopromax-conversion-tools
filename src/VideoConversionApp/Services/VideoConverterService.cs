@@ -181,6 +181,11 @@ public class VideoConverterService : IVideoConverterService
         }
         catch (Exception e)
         {
+            _configManager.NotifyMisconfigurationDetected(
+                "Failed to populate valid video codecs. FFMPEG must be installed on your system for the application to work. " +
+                "After installing, please restart this application. If the ffmpeg binary is not in your path, you must go to 'Settings' tab " +
+                "and configure the correct paths to ffmpeg and ffprobe there, and then restart the application.");
+            
             _logger.LogError($"{nameof(PopulateValidCodecs)}: failed to run ffmpeg -codecs; {e}");
             throw new Exception("Failed to iterate ffmpeg video codecs", e);
         }

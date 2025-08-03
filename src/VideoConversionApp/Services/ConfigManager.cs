@@ -26,7 +26,10 @@ public class ConfigManager : IConfigManager
             .ToArray();
     }
 
-    public event EventHandler? NewConfigLoaded;
+    public event EventHandler<string>? NewConfigLoaded;
+    public event EventHandler<string>? MisconfigurationDetected;
+
+    public string LastLoadedConfigFilePath { get; private set; }
 
     public bool LoadConfigurations(string filename)
     {
@@ -36,7 +39,8 @@ public class ConfigManager : IConfigManager
         if (!File.Exists(filename))
         {
             LoadDefaults();
-            NewConfigLoaded?.Invoke(this, EventArgs.Empty);
+            LastLoadedConfigFilePath = filename;
+            NewConfigLoaded?.Invoke(this, filename);
             return false;
         }
         
@@ -52,7 +56,8 @@ public class ConfigManager : IConfigManager
             _configs.Add(configurableType, configurable);
         }
 
-        NewConfigLoaded?.Invoke(this, EventArgs.Empty);
+        LastLoadedConfigFilePath = filename;
+        NewConfigLoaded?.Invoke(this, filename);
         return true;
     }
 
@@ -89,6 +94,11 @@ public class ConfigManager : IConfigManager
             options: new JsonSerializerOptions() { WriteIndented = true });
         Directory.CreateDirectory(Path.GetDirectoryName(filename)!);
         File.WriteAllText(filename, json);
+    }
+
+    public void NotifyMisconfigurationDetected(string reason)
+    {
+        MisconfigurationDetected?.Invoke(this, reason);
     }
 
     public T? GetConfig<T>() where T: ISerializableConfiguration

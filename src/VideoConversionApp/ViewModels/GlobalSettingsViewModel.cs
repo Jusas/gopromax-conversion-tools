@@ -35,6 +35,9 @@ public partial class GlobalSettingsViewModel : ViewModelBase
     public partial uint NumberOfThumbnailThreads { get; set; }
     [ObservableProperty]
     public partial uint ThumbnailTimePosition { get; set; }
+    
+    [ObservableProperty]
+    public partial string ConfigFilePath { get; set; }
 
     public List<LoggingConfig.LogLevels> AvailableLogLevels => new()
     {
@@ -49,7 +52,15 @@ public partial class GlobalSettingsViewModel : ViewModelBase
         _configManager = configManager;
         if (Design.IsDesignMode)
             return;
+
+        ConfigFilePath = _configManager.LastLoadedConfigFilePath;
+        _configManager.NewConfigLoaded += ConfigManagerOnNewConfigLoaded;
         Initialize();
+    }
+
+    private void ConfigManagerOnNewConfigLoaded(object? sender, string configFilePath)
+    {
+        ConfigFilePath = configFilePath;
     }
 
     void Initialize()

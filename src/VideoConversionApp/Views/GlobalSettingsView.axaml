@@ -30,6 +30,12 @@
         </Style>
       </Border.Styles>
       <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Margin="24 20 0 0">
+          <PathIcon Data="{StaticResource error_circle_regular}" RenderTransform="rotate(180deg)" Height="16" Margin="0 0 4 0"></PathIcon>
+          <TextBlock>Your settings file location is: </TextBlock>
+          <TextBlock FontWeight="Bold" Margin="10 0 0 0" Text="{Binding ConfigFilePath}" />
+        </StackPanel>
+        <TextBlock FontStyle="Italic" Margin="24 10 0 0">Settings are saved automatically on application exit.</TextBlock>
         <!-- PATH CONFIG -->
         <TextBlock Margin="24 20 0 10">Paths</TextBlock>
         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="20 0 20 0">
@@ -37,7 +43,7 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 8">
               <TextBlock Margin="0" FontWeight="DemiBold"
                 VerticalAlignment="Center">Executable paths</TextBlock>
-              <PathIcon Data="{StaticResource error_circle_regular}" Foreground="Goldenrod" Margin="4 0 0 0"
+              <PathIcon Data="{StaticResource error_circle_regular}" RenderTransform="rotate(180deg)" Foreground="Goldenrod" Margin="4 0 0 0"
                 VerticalAlignment="Center" Height="16" 
                 ToolTip.Tip="Paths to binary executables. These tools are required for this application to work."/>
             </StackPanel>

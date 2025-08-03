@@ -81,7 +81,7 @@ public partial class RenderSettingsViewModel : ViewModelBase
         
     }
 
-    private void ConfigManagerOnNewConfigLoaded(object? sender, EventArgs e)
+    private void ConfigManagerOnNewConfigLoaded(object? sender, string configFilePath)
     {
         PopulateFromConfig(_configManager.GetConfig<ConversionConfig>()!);
     }
@@ -239,9 +239,22 @@ public partial class RenderSettingsViewModel : ViewModelBase
 
     public void RefreshCodecLists()
     {
-        VideoCodecs = new ObservableCollection<CodecEntry>(_converterService.GetAvailableVideoCodecs().Where(x => x.EncodingSupported));
-        AudioCodecs = new ObservableCollection<CodecEntry>(_converterService.GetAvailableAudioCodecs().Where(x => x.EncodingSupported));
-        Containers = new ObservableCollection<CodecEntry>(_converterService.GetAvailableContainers().Where(x => x.EncodingSupported));
+        try
+        {
+            VideoCodecs =
+                new ObservableCollection<CodecEntry>(_converterService.GetAvailableVideoCodecs()
+                    .Where(x => x.EncodingSupported));
+            AudioCodecs =
+                new ObservableCollection<CodecEntry>(_converterService.GetAvailableAudioCodecs()
+                    .Where(x => x.EncodingSupported));
+            Containers =
+                new ObservableCollection<CodecEntry>(_converterService.GetAvailableContainers()
+                    .Where(x => x.EncodingSupported));
+        }
+        catch (Exception ex)
+        {
+        }
+
     }
 
     [RelayCommand]
