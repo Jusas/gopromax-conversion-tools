@@ -8,9 +8,13 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <LangVersion>preview</LangVersion>
         <AssemblyVersion>0.8.0</AssemblyVersion>
-        <Company />
+        <Company>MAXVideoConverter</Company>
         <Product>MAX Video Converter</Product>
         <PublishSingleFile>true</PublishSingleFile>        
+        <AssemblyName>MAXVideoConverter</AssemblyName>
+        <IsPackable>false</IsPackable>
+        <PackageId>MAXVideoConverter</PackageId>
+        <Authors>Jussi Saarivirta</Authors>        
     </PropertyGroup>
 
     <ItemGroup>
