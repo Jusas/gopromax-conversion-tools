@@ -50,7 +50,7 @@ jobs:
       with:
         draft: true
         fail_on_unmatched_files: true
-        title: MAX Video Converter ${{ github.ref_name }}
+        name: MAX Video Converter ${{ github.ref_name }}
         files: |
           all-outputs/*
           
