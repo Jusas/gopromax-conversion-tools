@@ -20,10 +20,10 @@ jobs:
     - name: Set build vars
       id: buildvars
       run: |
-        echo "::set-output name=version_string::$(echo '${{ github.ref_name }}' | sed 's@v@@')"
-        echo "::set-output name=builddate::$(date +'%Y-%m-%d')"
-        echo "::set-output name=builddate2::$(date +'%Y%m%d')"
-        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo "version_string=$(echo '${{ github.ref_name }}' | sed 's@v@@')" >> $GITHUB_OUTPUT
+        echo "builddate=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        echo "builddate2=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+        echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -36,8 +36,8 @@ jobs:
         for a in $PUBLISHED_APPIMAGE_ARCHS
         do
           arch_parts=($(echo $a | tr ":" "\n"))
-          ARCH_DOTNET="${parts[0]}"
-          ARCH_APPIMAGEKIT="${parts[1]}"
+          ARCH_DOTNET="${arch_parts[0]}"
+          ARCH_APPIMAGEKIT="${arch_parts[1]}"
           OUTPUT_DIR="output-${ARCH_DOTNET}"
 
           mkdir -p "${OUTPUT_DIR}"
