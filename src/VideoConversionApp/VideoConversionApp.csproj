@@ -7,7 +7,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <LangVersion>preview</LangVersion>
-        <AssemblyVersion>0.8.0</AssemblyVersion>
+        <VersionPrefix>0.8.0</VersionPrefix>
         <Company>MAXVideoConverter</Company>
         <Product>MAX Video Converter</Product>
         <PublishSingleFile>true</PublishSingleFile>        

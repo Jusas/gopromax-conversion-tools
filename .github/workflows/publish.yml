@@ -1,0 +1,56 @@
+name: Manually triggered new release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      
+env:
+  # <dotnet arch>:<appimagetool arch> <dotnet arch>:<appimagetool arch> ...
+  PUBLISHED_APPIMAGE_ARCHS: linux-x64:x86_64
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set build vars
+      id: buildvars
+      run: |
+        echo "::set-output name=version_string::$(echo '${{ github.ref_name }}' | sed 's@v@@')"
+        echo "::set-output name=builddate::$(date +'%Y-%m-%d')"
+        echo "::set-output name=builddate2::$(date +'%Y%m%d')"
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+          
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Build all architectures
+      run: |
+        mkdir -p "all-outputs"
+        for a in $PUBLISHED_APPIMAGE_ARCHS
+        do
+          arch_parts=($(echo $a | tr ":" "\n"))
+          ARCH_DOTNET="${parts[0]}"
+          ARCH_APPIMAGEKIT="${parts[1]}"
+          OUTPUT_DIR="output-${ARCH_DOTNET}"
+
+          mkdir -p "${OUTPUT_DIR}"
+          publish/scripts/create-appimage.sh "${ARCH_DOTNET}" "${ARCH_APPIMAGEKIT}" "${{ steps.buildvars.outputs.version_string }}" "${OUTPUT_DIR}" 
+          cp ${OUTPUT_DIR}/release/* all-outputs/
+        done
+      
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      with:
+        draft: true
+        fail_on_unmatched_files: true
+        title: MAX Video Converter ${{ github.ref_name }}
+        files: |
+          all-outputs/*
+          
