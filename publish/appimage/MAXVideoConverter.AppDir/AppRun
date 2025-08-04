@@ -1,0 +1,10 @@
+#!/bin/bash
+set -x
+
+DIR="`dirname \"$0\"`"
+DIR="`( cd \"$DIR\" && readlink -f $(pwd) )`"
+echo "-- AppImage mounted directory: $DIR"
+export APPDIR=$DIR
+export PATH=$DIR/usr/bin:$PATH:$DIR/usr/bin/external-utils
+
+MAXVideoConverter $@
