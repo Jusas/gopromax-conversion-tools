@@ -111,7 +111,7 @@ public partial class MediaSelectionViewModel : ViewModelBase
     {
         var previewSettings = _configManager.GetConfig<PreviewsConfig>()!;
         var videoType = new FilePickerFileType("GoPro MAX .360");
-        videoType.Patterns = [".360"];
+        videoType.Patterns = ["*.360"];
 
         var selectedFiles = await _storageServiceProvider!.GetStorageProvider().OpenFilePickerAsync(new FilePickerOpenOptions()
         {
@@ -250,15 +250,15 @@ public partial class MediaSelectionViewModel : ViewModelBase
     [RelayCommand]
     private void ClearAllFiles()
     {
-        foreach (var videoThumbViewModel in VideoList)
+        while (VideoList.Any())
         {
+            var videoThumbViewModel = VideoList[0];
             var video = videoThumbViewModel.LinkedVideo;
             if (video != null)
             {
                 _videoPoolManager.RemoveVideoFromPool(video);
             }
         }
-        VideoList.Clear();
     }
 
     [RelayCommand]
