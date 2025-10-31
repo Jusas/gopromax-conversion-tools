@@ -2,6 +2,8 @@
 
 ### Go to **[Releases](https://github.com/Jusas/gopromax-conversion-tools/releases)** for the downloads
 
+Available as a **.deb package** (recommended) and as an **AppImage**.
+
 ![Screenshots](docs/images/screenshots.jpg)
 
 ### Not sure how to use? [Hop over to instructions!](#usage-instructions)
@@ -70,6 +72,8 @@ Using the application is pretty simple and hopefully somewhat intuitive.
 ## Prerequisites
 First off, you will need to have [ffmpeg](https://ffmpeg.org/) installed in order for the application to do anything meaningful. It will let you know on startup if ffmpeg can't be found.
 
+***Note:** In the .deb package it is declared as a dependency and will be automatically installed from apt.*
+
 Most Linux distros have it packaged and ready to install, consult your distro's package manager. If you're running Ubuntu or its derivatives, just run:
 
 ```
@@ -77,6 +81,8 @@ sudo apt install ffmpeg
 ```
 
 The app also uses [Exiftool](https://exiftool.org/) but in the AppImage release it's bundled together. However if you already have it installed and can be found from your `PATH`, it will be used automatically.
+
+***Note:** In the .deb package it is declared as a dependency and will be automatically installed from apt.*
 
 ## Basic usage
 
