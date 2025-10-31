@@ -1,0 +1,11 @@
+Package: max-video-converter
+Version: BUILD_VERSION
+Section: video
+Priority: optional
+Architecture: amd64
+Installed-Size: 90000
+Depends: libx11-6, libx11-dev, libice6, libsm6, libfontconfig1, libimage-exiftool-perl, ffmpeg, vlc, libvlc-dev
+Maintainer: Jussi Saarivirta <jusasi@gmail.com>
+Homepage: https://github.com/Jusas/gopromax-conversion-tools
+Description: GoPro MAX .360 video conversion tool for Linux
+Copyright: 2025 Jussi Saarivirta <jusasi@gmail.com>

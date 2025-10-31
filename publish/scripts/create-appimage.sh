@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Create AppImage for the app (includes compiling)
 #set -x
-set -e
+set -euo pipefail
 
 # Steps
 # 1. Copy the AppDir to a new publish folder

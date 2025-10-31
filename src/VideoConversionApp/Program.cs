@@ -29,8 +29,8 @@ class Program
                 App.Logger.LogError(message);
                 App.Logger.Flush();
             }
-            else
-                Console.Error.WriteLine(message);
+            
+            Console.Error.WriteLine(message);
         }
            
     }
@@ -38,6 +38,7 @@ class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
+            .With(new X11PlatformOptions() { GlxRendererBlacklist = {}})
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();

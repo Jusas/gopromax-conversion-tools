@@ -43,9 +43,13 @@ jobs:
           ARCH_APPIMAGEKIT="${arch_parts[1]}"
           OUTPUT_DIR="output-${ARCH_DOTNET}"
 
-          mkdir -p "${OUTPUT_DIR}"
-          publish/scripts/create-appimage.sh "${ARCH_DOTNET}" "${ARCH_APPIMAGEKIT}" "${{ steps.buildvars.outputs.version_string }}" "${OUTPUT_DIR}" 
-          cp ${OUTPUT_DIR}/release/* all-outputs/
+          mkdir -p "${OUTPUT_DIR}/appimage"
+          publish/scripts/create-appimage.sh "${ARCH_DOTNET}" "${ARCH_APPIMAGEKIT}" "${{ steps.buildvars.outputs.version_string }}" "${OUTPUT_DIR}/appimage" 
+          cp ${OUTPUT_DIR}/appimage/release/* all-outputs/
+
+          mkdir -p "${OUTPUT_DIR}/deb"
+          publish/scripts/create-deb.sh -p src/VideoConversionApp/VideoConversionApp.csproj -a "${ARCH_DOTNET}" -v "${{ steps.buildvars.outputs.version_string }}" -d publish/deb -o "${OUTPUT_DIR}/deb" -c
+          cp ${OUTPUT_DIR}/deb/*.deb all-outputs/
         done
       
     - name: Create release

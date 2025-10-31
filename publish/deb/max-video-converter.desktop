@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=MAX Video Converter
+Exec=max-video-converter
+Icon=max-video-converter
+Type=Application
+Categories=Video;AudioVideo;
+Comment=Application to convert GoPro MAX .360 videos to standard equirectangular projected 360 videos
