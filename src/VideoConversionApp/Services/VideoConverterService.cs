@@ -397,7 +397,8 @@ public class VideoConverterService : IVideoConverterService
             "-filter_complex", avFilterString,
             "-map", "[OUTPUT_FRAME]",
             "-c:v", conversionConfig.CodecVideo,
-            "-f", conversionConfig.UseCustomEncodingSettings ? conversionConfig.CustomContainerName : "mov"
+            "-f", conversionConfig.UseCustomEncodingSettings ? conversionConfig.CustomContainerName : "mov",
+            "-movflags", "+faststart"
         };
         if (conversionConfig.OutputAudio && inputVideoInfo.HasAudio)
         {
