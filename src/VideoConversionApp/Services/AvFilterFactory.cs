@@ -19,8 +19,6 @@ public class AvFilterFactory : IAvFilterFactory
 
     public AvFilterFactory()
     {
-        // using var resourceStream = AssetLoader.Open(
-        //     new Uri("avares://VideoConversionApp/Resources/transform-template.avfilter"));
         var assembly = GetType().Assembly;
         var filter = assembly
             .GetManifestResourceNames()
@@ -30,7 +28,7 @@ public class AvFilterFactory : IAvFilterFactory
         _avFilterTemplate = reader.ReadToEnd();
     }
     
-    public string BuildAvFilter(AvFilterFrameSelectCondition? frameSelectCondition = null, 
+    public string BuildAvFilter(int videoTrack1Index, int videoTrack2Index, AvFilterFrameSelectCondition? frameSelectCondition = null, 
         AvFilterFrameRotation? frameRotation = null)
     {
         var filter = _avFilterTemplate;
@@ -60,6 +58,9 @@ public class AvFilterFactory : IAvFilterFactory
             ? "select=" + string.Join("*", expressionParts) + "," 
             : string.Empty;
         filter = filter.Replace("{FRAME_SELECT_EXPRESSION}", frameSelectionExpression);
+        
+        filter = filter.Replace("{V0}", videoTrack1Index.ToString());
+        filter = filter.Replace("{V1}", videoTrack2Index.ToString());
         
         // Rotation.
         var yaw = frameRotation?.Yaw ?? 0;

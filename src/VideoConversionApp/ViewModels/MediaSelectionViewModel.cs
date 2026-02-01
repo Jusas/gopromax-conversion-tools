@@ -144,6 +144,7 @@ public partial class MediaSelectionViewModel : ViewModelBase
                 ShowAsSelectedForConversion = false,
                 LinkedVideo = video,
                 HasProblems = !videoInfo.IsGoProMaxFormat || !videoInfo.IsValidVideo,
+                HasAudio = videoInfo.HasAudio,
                 ToolTipMessage = videoInfo.ValidationIssues is { Length: > 0 } 
                     ? string.Join("\n", new[] {"Video has issues, cannot use:"}.Concat(videoInfo.ValidationIssues)) 
                     : null!

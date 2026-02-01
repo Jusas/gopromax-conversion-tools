@@ -104,14 +104,14 @@ public class VideoPreviewService : IVideoPreviewService
     {
         var pathsConfig = _configManager.GetConfig<PathsConfig>()!;
         
-        var avFilterString = _avFilterFactory.BuildAvFilter(
-            new AvFilterFrameSelectCondition() { KeyFramesOnly = true }, AvFilterFrameRotation.Zero);
-        
         while (_thumbnailGenerationQueue.TryDequeue(out var threadWorkItem))
         {
             var (mediaInfo, timePosMs) = threadWorkItem.WorkItem;
             var tmpThumbFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".jpg");
             var thumbTimePosition = timePosMs / 1000.0;
+            
+            var avFilterString = _avFilterFactory.BuildAvFilter(mediaInfo.FirstVideoTrack, mediaInfo.SecondVideoTrack,
+                new AvFilterFrameSelectCondition() { KeyFramesOnly = true }, AvFilterFrameRotation.Zero);
             
             var processStartInfo = new ProcessStartInfo(pathsConfig.Ffmpeg,
                 [
@@ -175,7 +175,7 @@ public class VideoPreviewService : IVideoPreviewService
         var pathsConfig = _configManager.GetConfig<PathsConfig>()!;
         var skipLength = inputVideo.DurationInSeconds / (numberOfFrames - 1);
 
-        var avFilterString = _avFilterFactory.BuildAvFilter(new AvFilterFrameSelectCondition()
+        var avFilterString = _avFilterFactory.BuildAvFilter(inputVideo.FirstVideoTrack, inputVideo.SecondVideoTrack, new AvFilterFrameSelectCondition()
         {
             FrameDistance = (double)Math.Round(skipLength, 3),
             KeyFramesOnly = true
@@ -281,7 +281,8 @@ public class VideoPreviewService : IVideoPreviewService
         
         _logger.LogInformation($"Generating keyframe video for {videoInfo.Filename}");
 
-        var avFilterString = _avFilterFactory.BuildAvFilter(new AvFilterFrameSelectCondition()
+        var avFilterString = _avFilterFactory.BuildAvFilter(videoInfo.FirstVideoTrack, videoInfo.SecondVideoTrack, 
+            new AvFilterFrameSelectCondition()
         {
             KeyFramesOnly = true
         }, rotation);

@@ -347,7 +347,8 @@ public class VideoConverterService : IVideoConverterService
         var pathsConfig = _configManager.GetConfig<PathsConfig>()!;
         var conversionConfig = _configManager.GetConfig<ConversionConfig>()!;
 
-        var avFilterString = _avFilterFactory.BuildAvFilter(new AvFilterFrameSelectCondition(), rotation);
+        var avFilterString = _avFilterFactory.BuildAvFilter(inputVideoInfo.FirstVideoTrack, inputVideoInfo.SecondVideoTrack,
+            new AvFilterFrameSelectCondition(), rotation);
 
         // Do this better later. Right now, the presets "prores" and "cfhd" render to mov container and
         // bluntly assume the rest to be mp4...
@@ -359,7 +360,7 @@ public class VideoConverterService : IVideoConverterService
         
         var outputVideoFullFilename = GetFilenameFromPattern(video, conversionConfig.OutputFilenamePattern) + $".{fileNameExtension}";
         if (conversionConfig.OutputBesideOriginals)
-            outputVideoFullFilename = Path.Combine(Path.GetDirectoryName(video.InputVideoInfo.Filename)!, outputVideoFullFilename);
+            outputVideoFullFilename = Path.Combine(Path.GetDirectoryName(inputVideoInfo.Filename)!, outputVideoFullFilename);
         else
             outputVideoFullFilename = Path.Combine(conversionConfig.OutputDirectory, outputVideoFullFilename);
 
@@ -398,7 +399,7 @@ public class VideoConverterService : IVideoConverterService
             "-c:v", conversionConfig.CodecVideo,
             "-f", conversionConfig.UseCustomEncodingSettings ? conversionConfig.CustomContainerName : "mov"
         };
-        if (conversionConfig.OutputAudio)
+        if (conversionConfig.OutputAudio && inputVideoInfo.HasAudio)
         {
             argsList.InsertRange(argsList.IndexOf("-map"), "-map", "0:a:0");
             argsList.InsertRange(argsList.IndexOf("-c:v"), "-c:a", conversionConfig.CodecAudio);

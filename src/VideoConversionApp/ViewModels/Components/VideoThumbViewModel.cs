@@ -29,6 +29,7 @@ public partial class VideoThumbViewModel : ViewModelBase
     [ObservableProperty] public partial bool HasProblems { get; set; } = false;
     [ObservableProperty] public partial string ToolTipMessage { get; set; } = null!;
     [ObservableProperty] public partial bool HasConversionSettingsModified { get; set; } = false;
+    [ObservableProperty] public partial bool HasAudio { get; set; } = true;
 
     // TODO could just use converters that we have now
     public string VideoDateTimeString => VideoDateTime.ToString(DataFormattingHelpers.TryResolveActiveCulture());
@@ -56,6 +57,7 @@ public partial class VideoThumbViewModel : ViewModelBase
             FileSize = 180_556_782;
             VideoDateTime = DateTime.Now;
             VideoLengthSeconds = 127.5;
+            HasAudio = false;
             return;
         }
 

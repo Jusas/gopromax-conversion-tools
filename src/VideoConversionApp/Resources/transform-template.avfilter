@@ -1,26 +1,26 @@
-[0:0]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=0:y=0,format=yuvj420p[LEFTFRAME_left_slice],
-[0:0]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=624:y=0,format=yuvj420p,
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=0:y=0,format=yuvj420p[LEFTFRAME_left_slice],
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=624:y=0,format=yuvj420p,
 geq=
 lum='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cb='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cr='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 a='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))',
 crop=64:1344:x=0:y=0,format=yuvj420p,scale=96:1344[LEFTFRAME_overlap_slice],
-[0:0]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=752:y=0,format=yuvj420p[LEFTFRAME_right_slice],
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=752:y=0,format=yuvj420p[LEFTFRAME_right_slice],
 [LEFTFRAME_left_slice][LEFTFRAME_overlap_slice]hstack[LEFTFRAME_left_and_overlap_joined], 
 [LEFTFRAME_left_and_overlap_joined][LEFTFRAME_right_slice]hstack[LEFTFRAME_completed],
 
-[0:0]{FRAME_SELECT_EXPRESSION}crop=1344:1344:1376:0[CENTERFRAME_completed],
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=1344:1344:1376:0[CENTERFRAME_completed],
 
-[0:0]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=2720:y=0,format=yuvj420p[RIGHTFRAME_left_slice],
-[0:0]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=3344:y=0,format=yuvj420p,
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=2720:y=0,format=yuvj420p[RIGHTFRAME_left_slice],
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=3344:y=0,format=yuvj420p,
 geq=
 lum='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cb='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cr='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 a='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))',
 crop=64:1344:x=0:y=0,format=yuvj420p,scale=96:1344[RIGHTFRAME_overlap_slice],
-[0:0]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=3472:y=0,format=yuvj420p[RIGHTFRAME_right_slice],
+[0:{V0}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=3472:y=0,format=yuvj420p[RIGHTFRAME_right_slice],
 [RIGHTFRAME_left_slice][RIGHTFRAME_overlap_slice]hstack[RIGHTFRAME_left_and_overlap_joined], 
 [RIGHTFRAME_left_and_overlap_joined][RIGHTFRAME_right_slice]hstack[RIGHTFRAME_completed],
 
@@ -28,29 +28,29 @@ crop=64:1344:x=0:y=0,format=yuvj420p,scale=96:1344[RIGHTFRAME_overlap_slice],
 [LEFT_CENTER_frames_joined][RIGHTFRAME_completed]hstack[LEFT_CENTER_RIGHT_completed],
 
 
-[0:5]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=0:y=0,format=yuvj420p[BOTTOMFRAME_left_slice],
-[0:5]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=624:y=0,format=yuvj420p,
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=0:y=0,format=yuvj420p[BOTTOMFRAME_left_slice],
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=624:y=0,format=yuvj420p,
 geq=
 lum='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cb='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cr='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 a='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))',
 crop=64:1344:x=0:y=0,format=yuvj420p,scale=96:1344[BOTTOMFRAME_overlap_slice],
-[0:5]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=752:y=0,format=yuvj420p[BOTTOMFRAME_right_slice],
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=752:y=0,format=yuvj420p[BOTTOMFRAME_right_slice],
 [BOTTOMFRAME_left_slice][BOTTOMFRAME_overlap_slice]hstack[BOTTOMFRAME_left_and_overlap_joined], 
 [BOTTOMFRAME_left_and_overlap_joined][BOTTOMFRAME_right_slice]hstack[BOTTOMFRAME_completed],
 
-[0:5]{FRAME_SELECT_EXPRESSION}crop=1344:1344:1376:0[BACKFRAME_completed],
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=1344:1344:1376:0[BACKFRAME_completed],
 
-[0:5]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=2720:y=0,format=yuvj420p[TOPFRAME_left_slice],
-[0:5]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=3344:y=0,format=yuvj420p,
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=2720:y=0,format=yuvj420p[TOPFRAME_left_slice],
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=128:1344:x=3344:y=0,format=yuvj420p,
 geq=
 lum='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cb='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 cr='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))':
 a='if(between(X, 0, 64), (p((X+64),Y)*(((X+1))/65))+(p(X,Y)*((65-((X+1)))/65)), p(X,Y))',
 crop=64:1344:x=0:y=0,format=yuvj420p,scale=96:1344[TOPFRAME_overlap_slice],
-[0:5]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=3472:y=0,format=yuvj420p[TOPFRAME_right_slice],
+[0:{V1}]{FRAME_SELECT_EXPRESSION}crop=624:1344:x=3472:y=0,format=yuvj420p[TOPFRAME_right_slice],
 [TOPFRAME_left_slice][TOPFRAME_overlap_slice]hstack[TOPFRAME_left_and_overlap_joined], 
 [TOPFRAME_left_and_overlap_joined][TOPFRAME_right_slice]hstack[TOPFRAME_completed],
 

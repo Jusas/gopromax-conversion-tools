@@ -88,5 +88,17 @@
       <Ellipse Width="12" Height="12" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14  0 0 0"></Ellipse>
       <Ellipse Width="10" Height="10" Fill="Orange" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15  1 0 0"></Ellipse>
     </Panel>
+    
+    <Panel Grid.Row="1" Grid.Column="1"
+      ToolTip.Tip="Video has no audio tracks">
+      <PathIcon Data="{StaticResource speaker_off_regular}" 
+        IsVisible="{Binding !HasAudio}"
+        HorizontalAlignment="Right" VerticalAlignment="Top" 
+        Margin="0  0 15 0" Width="14" Height="14" >
+        <PathIcon.Effect>
+          <DropShadowEffect Color="Black" BlurRadius="2" OffsetX="0" OffsetY="0" />
+        </PathIcon.Effect>
+      </PathIcon>
+    </Panel>
   </Grid>
 </UserControl>

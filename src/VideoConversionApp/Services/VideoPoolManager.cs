@@ -59,6 +59,10 @@ public partial class VideoPoolManager : IVideoPoolManager
         public DateTime CreatedDateTime { get; } = DateTime.MinValue;
         public long SizeBytes { get; } = 0;
         public string[]? ValidationIssues { get; } = null;
+        public int FirstVideoTrack { get; } = 0;
+        public int SecondVideoTrack { get; } = 5;
+        public int FirstAudioTrack { get; } = 1;
+        public int SecondAudioTrack { get; } = 2;
     }
 
     private class PreviewDummyInputVideoInfo : IInputVideoInfo
@@ -70,6 +74,10 @@ public partial class VideoPoolManager : IVideoPoolManager
         public DateTime CreatedDateTime { get; } = DateTime.Now;
         public long SizeBytes { get; } = 200_000_000;
         public string[]? ValidationIssues { get; } = null;
+        public int FirstVideoTrack { get; } = 0;
+        public int SecondVideoTrack { get; } = 5;
+        public int FirstAudioTrack { get; } = 1;
+        public int SecondAudioTrack { get; } = 2;
     }
 
 
